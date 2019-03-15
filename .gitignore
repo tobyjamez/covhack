@@ -47,6 +47,9 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
+# Swap files
+*.swp
+
 # Translations
 *.mo
 *.pot
