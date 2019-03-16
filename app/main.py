@@ -48,6 +48,7 @@ class RootWidget(FloatLayout):
     def __init__(self, **kwargs):
         # make sure we aren't overriding any important functionality
         super(RootWidget, self).__init__(**kwargs)
+
         self.add_widget(self.button, index=0)
         self.add_widget(Image(source='Phrijj.png', size_hint=(1, 1),
                         pos_hint={'center_x': 0.5, 'center_y': 0.6}),
