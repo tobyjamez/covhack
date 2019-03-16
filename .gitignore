@@ -111,3 +111,7 @@ venv.bak/
 
 # Visual Studio config
 .vs
+
+# Compiled Android binaries
+/app/bin
+/app/.buildozer
