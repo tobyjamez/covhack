@@ -105,3 +105,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# apk builds
+*.apk
+
+# Visual Studio config
+.vs
