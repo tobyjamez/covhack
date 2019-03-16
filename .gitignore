@@ -108,3 +108,6 @@ venv.bak/
 
 # apk builds
 *.apk
+
+# Visual Studio config
+.vs
