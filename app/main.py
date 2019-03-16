@@ -17,28 +17,41 @@ for env_variable in sys.argv[1:]:
     except(IndexError) as e:  # Passed value has no equals
         pass
 
-
 import kivy
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
-from kivy.uix.label import Label
+from kivy.uix.dropdown import DropDown
 from kivy.uix.image import Image
-import numpy as np
+
 kivy.require('1.10.1')
+
+
 class RootWidget(FloatLayout):
+    # Class variables
+    dropdown = DropDown()
+    button = Button(text="Enter",
+                    size_hint=(1, .2),
+                    pos_hint={'center_x': 0.5, 'center_y': 0.07})
+
+    # Add buttons to dropdown menu
+    for index in range(3):
+        dropdown_button = Button(text='Button %r' % index,
+                                 size_hint_y=None,
+                                 height=44)
+
+        dropdown.add_widget(dropdown_button)
+
+    button.bind(on_release=dropdown.open)
+    dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))
+
     def __init__(self, **kwargs):
         # make sure we aren't overriding any important functionality
         super(RootWidget, self).__init__(**kwargs)
+        self.add_widget(self.button, index=0)
         self.add_widget(Image(source='Phrijj.png', size_hint=(1, 1),
-                pos_hint={'center_x': 0.5, 'center_y': 0.6}),index=0)
-        # let's add a Widget to this layout
-        self.add_widget(
-            Button(
-                text="Enter",
-                size_hint=(1, .2),
-                pos_hint={'center_x': 0.5, 'center_y': 0.07}),index = 1)
-        
+                        pos_hint={'center_x': 0.5, 'center_y': 0.6}),
+                        index=1)
 
 
 class PhrijjApp(App):
@@ -48,7 +61,3 @@ class PhrijjApp(App):
 
 if __name__ == '__main__':
     PhrijjApp().run()
-
-
-# Subclass app below
-# class MainLoop(a.App):
