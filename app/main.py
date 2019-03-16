@@ -23,6 +23,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown
 from kivy.uix.image import Image
+from kivy.uix.textinput import TextInput
 
 kivy.require('1.10.1')
 
@@ -39,11 +40,20 @@ class RootWidget(FloatLayout):
         dropdown_button = Button(text='Button %r' % index,
                                  size_hint_y=None,
                                  height=44)
-
+        
+      
         dropdown.add_widget(dropdown_button)
-
+   
+    
+    
     button.bind(on_release=dropdown.open)
     dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))
+
+    def on_enter(instance, value):
+        print('User pressed enter in', instance)
+    def setOpacity(a):
+        a.opacity = 1
+        return void 
 
     def __init__(self, **kwargs):
         # make sure we aren't overriding any important functionality
@@ -53,6 +63,9 @@ class RootWidget(FloatLayout):
         self.add_widget(Image(source='Phrijj.png', size_hint=(1, 1),
                         pos_hint={'center_x': 0.5, 'center_y': 0.6}),
                         index=1)
+        textinput = TextInput(hint_text = "Search for a meal",multiline=False,size_hint_y=None,height = 44,pos_hint={'center_x': 0.5, 'center_y': 0.95},opacity = 0)
+        self.add_widget(textinput)
+        
 
 
 class PhrijjApp(App):
