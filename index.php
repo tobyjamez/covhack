@@ -3,7 +3,7 @@ $name = "apple";
 
 $sqlstatement="SELECT name, price, itemid, providerid FROM items WHERE name LIKE '".$name."'ORDER BY price ;";
 
-include_once ('db.php');
+include_once ('server/db.php');
 
 $result = $mysqli->query($sqlstatement);
 
