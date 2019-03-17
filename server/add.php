@@ -7,11 +7,13 @@ include_once ('db.php');
 if(!isset($_POST['name']))
 {
   $name=$_POST['name'];
-  $sqlstatement="SELECT itemid FROM items WHERE name LIKE '".$name."'ORDER BY price ;";
+  response(200,"Product",$name);
+  $sqlstatement="SELECT itemid FROM items WHERE name LIKE '".$name."' ORDER BY price ;";
   $result = $mysqli->query($sqlstatement);
   $row = mysqli_fetch_assoc($result);
 
   $itemid = $row['itemid'];
+
   if(empty($itemid))
   {
     response(200,"Product Not Found",NULL);
