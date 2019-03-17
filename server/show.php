@@ -50,6 +50,7 @@ if(empty($result))
 	    response(200,"Product Found",$itemresponse);
 	  }
 	}
+}
 else
 {
   response(400,"Invalid Request",NULL);
