@@ -21,7 +21,7 @@ if(empty($result))
      $result2 = $mysqli->query($sqlstatement2);
      $index = 0;
      while($row2 = mysql_fetch_assoc($result2)){
-        if(row2[itemid] == row[itemid]) {
+        if($row2[$itemid] == $row[$itemid]) {
             $index += 1;
         }
      }
