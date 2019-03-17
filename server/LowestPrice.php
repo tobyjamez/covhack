@@ -2,12 +2,12 @@
 
 //Input, will eventually be through post
 
-$json = file_get_contents("php://input");
-$obj = json_decode($json); //obj should be renamed name and nect line removed
+//$json = file_get_contents("php://input");
+//$obj = json_decode($json); //obj should be renamed name and nect line removed
 $name = "apple";
-if(!is_string($obj)){
-    throw new Exception('Received content contained invalid JSON!');
-}
+//if(!is_string($obj)){
+  //  throw new Exception('Received content contained invalid JSON!');
+//}
 
 $sqlstatement="SELECT name, price, itemid, providerid FROM items WHERE name LIKE '".$name."'ORDER BY price ;";
 
