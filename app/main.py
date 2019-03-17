@@ -30,19 +30,17 @@ from comm import search, add, show
 kivy.require('1.10.1')
 
 
-class CustomTextInput(TextInput):
-    def toggle_opacity(self) -> type(None):
-        self.opacity = 1 - self.opacity
-
-
 class RootWidget(FloatLayout):
     # Class variables
 
-    @staticmethod
-    def button_trip(textinput, dropdown, widget):
-        dropdown.open(widget)
-        textinput.toggle_opacity()
+    def send_search(term, response_list, widget) -> type(None):
 
+        response_dict = search(term)
+
+        response_list.append(response_dict)
+
+        self.dropdown.dismiss()
+    
     def __init__(self, **kwargs):
         # make sure we aren't overriding any important functionality
         super(RootWidget, self).__init__(**kwargs)
@@ -56,46 +54,51 @@ class RootWidget(FloatLayout):
         # --------------------------------------------------------------
 
         # Add textinput ------------------------------------------------
-        textinput = CustomTextInput(hint_text="Search for a meal",
-                                    multiline=False,
-                                    size_hint_y=None,
-                                    height=44,
-                                    pos_hint={'center_x': 0.5,
-                                              'center_y': 0.95},
-                                    opacity=0)
+        self.textinput = TextInput(hint_text="Search for ingredients",
+                                         multiline=False,
+                                         size_hint_y=None,
+                                         height=44,
+                                         pos_hint={'center_x': 0.5,
+                                                   'center_y': 0.95},
+                                         opacity=1)
 
-        self.add_widget(textinput)
 
         # Add dropdown menu --------------------------------------------
-        dropdown = DropDown()
+        self.dropdown = DropDown()
+        self.dropdown.add_widget(self.textinput)
 
         # Add buttons to dropdown menu
         search_button = Button(text="Search",
                                size_hint_y=None,
                                height=44)
 
-        dropdown.add_widget(search_button)
+        self.search_response_list = []
+
+        search_button.bind(on_click=lambda widget:
+                           self.send_search(self.textinput.text,
+                                            self.search_response_list,
+                                            widget))
+
+        self.dropdown.add_widget(search_button)
 
         show_button = Button(text="Show",
                              size_hint_y=None,
                              height=44)
 
-        dropdown.add_widget(show_button)
+        self.dropdown.add_widget(show_button)
 
-        dropdown.bind(on_release=lambda x: textinput.toggle_opacity())
         # --------------------------------------------------------------
 
         # Add enter button ---------------------------------------------
-        enter_button = Button(text="Enter",
-                              size_hint=(1, .2),
-                              pos_hint={'center_x': 0.5, 'center_y': 0.07})
+        self.enter_button = Button(text="Start!",
+                                   size_hint=(1, .2),
+                                   pos_hint={'center_x': 0.5,
+                                             'center_y': 0.07})
 
-        enter_button.bind(on_release=lambda widget: self.button_trip(textinput,
-                                                                     dropdown,
-                                                                     widget))
-
-        self.add_widget(enter_button, index=0)
+        self.enter_button.bind(on_release=self.dropdown.open)
+        self.add_widget(self.enter_button, index=0)
         # --------------------------------------------------------------
+        # ---------------------------------------------------------------------
 
 
 class PhrijjApp(App):
