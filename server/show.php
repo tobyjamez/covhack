@@ -32,13 +32,18 @@ if(!empty($result))
     $itemid = $row['itemid'];       //providerid
 
     //Find name of provider
-    $sqlstatement3="SELECT name , provider , price FROM items WHERE itemid =".$itemid.";";
+    $sqlstatement3="SELECT name , providerid , price FROM items WHERE itemid = ".$itemid.";";
     $iresult = $mysqli->query($sqlstatement3);
 
     if(!empty($iresult)){
 
 	    $currentItem = mysqli_fetch_assoc($iresult);
-	    $provider = $currentItem['provider'];  //contains provider
+	    $providerid = $currentItem['providerid'];
+			$sqlstatement4="SELECT provider FROM providers WHERE providerid =".$providerid.";";
+    	$iresult2 = $mysqli->query($sqlstatement4);	
+    	$currentItem2 = mysqli_fetch_assoc($iresult2);    
+    	$provider= $currentItem2['provider'];
+	    																							  //contains provider
 	    $price = $currentItem['price'];                 //contains price
 	    $name = $currentItem['name'];                   //name
 	    $itemresponse = array($name, $price,$provider);
