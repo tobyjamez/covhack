@@ -58,7 +58,7 @@ else if ( $action == "show" ) {
          $result2 = $mysqli->query($sqlstatement2);
          $index = 0;
          while($row2 = mysql_fetch_assoc($result2)){
-            if(row2[itemid] == row[itemid]) {
+            if($row2[$itemid] == $row[$itemid]) {
                 $index += 1;
     
             }
@@ -72,7 +72,7 @@ else if ( $action == "show" ) {
         $provider = $providername['provider'];  //contains provider
         $price = $row['price'];                 //contains price
         $name = $row['name'];                   //name
-        &itemresponse = array($name, $price,$provider);
+        $itemresponse = array($name, $price,$provider);
         
         array_push($response, $itemresponse);
     }
