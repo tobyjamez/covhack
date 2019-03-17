@@ -6,6 +6,7 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 
 include_once ('db.php');
+
 $data = json_decode($data);
 if(!empty($data->name)){
 

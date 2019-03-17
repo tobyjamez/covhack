@@ -3,16 +3,8 @@ $name = "apple";
 
 $sqlstatement="SELECT name, price, itemid, providerid FROM items WHERE name LIKE '".$name."'ORDER BY price ;";
 
-$url = getenv('JAWSDB_URL');
-$dbparts = parse_url($url);
+include_once ('db.php');
 
-$hostname = $dbparts['host'];
-$username = $dbparts['user'];
-$password = $dbparts['pass'];
-$database = ltrim($dbparts['path'],'/');
-
-//opening the mySQL database and ordering items by price
-$mysqli = new mysqli($hostname, $username, $password, $database);
 $result = $mysqli->query($sqlstatement);
 
 //Get relevant data about item
