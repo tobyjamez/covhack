@@ -4,7 +4,7 @@ header("Content-Type:application/json");
 
 include_once ('db.php');
 
-if(!isset($_POST['name']))
+if(isset($_POST['name']))
 {
   $name=$_POST['name'];
   response(200,"Product",$name);

@@ -2,6 +2,6 @@ RewriteEngine On    # Turn on the rewriting engine
 
 RewriteRule ^lowestprice/([a-zA-Z_-]*)$ lowestprice.php?name=$1 [NC,L]
 
-RewriteRule ^add/([a-zA-Z_-]*)$ add.php?name=$1 [NC,L]
+RewriteRule ^add add.php [NC,L]
 
 RewriteRule ^show show.php [NC,L]
