@@ -35,11 +35,40 @@ kivy.require('1.10.1')
 
 class RootWidget(ScreenManager):
 
-    def switch_screen(self):
+    def return_home(self, *args):
+        self.current="1"
+
+    def switch_screen(self, *args):
+        response_list = show().json()['data']
+
+        self.list_dropdown = DropDown(size_hint=(1,1))
+
+        for item in response_list:
+            self.list_dropdown.add_widget(ProductView(dict(name=item[0],
+                                                           price=item[1],
+                                                           provider=item[2]),
+                                                      size_hint_y=None,
+                                                      height=144,
+                                                      pos_hint={'center_x':0.5},
+                        color=(0, 0, 0, 1),
+                              background_color=(255, 255, 255, 255)))
+
+        buy_button = Button(text="Buy all", 
+                                                      size_hint_y=None,
+                                                      height=144,
+                                                      pos_hint={'center_x':0.5},
+                        color=(0, 0, 0, 1),
+                              background_color=(255, 255, 255, 255))
+
+        buy_button.bind(on_press=self.return_home)
+
+        self.list_dropdown.add_widget(buy_button)
+
         self.current = "list"
+        self.list_screen.add_widget(self.list_dropdown)
         self.dropdown.dismiss()
 
-    def send_search(self, term, response_list) -> type(None):
+    def send_search(self, term, response_list, *args) -> type(None):
 
         new_screen = "search"
 
@@ -52,7 +81,9 @@ class RootWidget(ScreenManager):
         else:
             response_list.append(response_dict)
             for item in response_list:
-                item_view = ProductView(item)
+                item_view = ProductView(item,
+                        color=(0, 0, 0, 1),
+                              background_color=(255, 255, 255, 255))
                 self.search_screen.add_widget(item_view)
 
             self.current = new_screen
@@ -92,7 +123,7 @@ class RootWidget(ScreenManager):
         self.textinput = TextInput(hint_text="Search for ingredients",
                                    multiline=False,
                                    size_hint_y=None,
-                                   height=44,
+                                   height=144,
                                    pos_hint={'center_x': 0.5,
                                              'center_y': 0.95},
                                    opacity=1)
@@ -106,7 +137,7 @@ class RootWidget(ScreenManager):
                               background_color=(255, 255, 255, 255),
                               text="Search",
                               size_hint_y=None,
-                              height=44)
+                              height=144)
 
         self.search_response_list = []
 
@@ -120,9 +151,9 @@ class RootWidget(ScreenManager):
                              background_color=(255, 255, 255, 255),
                              text="Show",
                              size_hint_y=None,
-                             height=44)
+                             height=144)
 
-        show_button.bind(on_press=lambda widget: self.switch_screen())
+        show_button.bind(on_press=self.switch_screen)
 
         self.dropdown.add_widget(show_button)
 
