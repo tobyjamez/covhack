@@ -70,7 +70,11 @@ class RootWidget(FloatLayout):
         # Add buttons to dropdown menu
         search_button = Button(text="Search",
                                size_hint_y=None,
-                               height=44)
+                               height=44,
+                               color=(0, 0, 0, 1), 
+                               background_color=(255, 255, 255, 255),
+                               border_color=(255,255, 255, 255)
+                               )
 
         self.search_response_list = []
 
@@ -83,8 +87,10 @@ class RootWidget(FloatLayout):
 
         show_button = Button(text="Show",
                              size_hint_y=None,
-                             height=44)
-
+                             height=44,
+                             color=(0, 0, 0, 1), 
+                             background_color=(255, 255, 255, 255),
+                             border_color=(255,255, 255, 255))
         self.dropdown.add_widget(show_button)
 
         # --------------------------------------------------------------
@@ -93,7 +99,11 @@ class RootWidget(FloatLayout):
         self.enter_button = Button(text="Start!",
                                    size_hint=(1, .2),
                                    pos_hint={'center_x': 0.5,
-                                             'center_y': 0.07})
+                                             'center_y': 0.07},
+                                   color=(0, 0, 0, 1), 
+                                   background_color=(255, 255, 255, 255),
+                                   border_color=(255,255, 255, 255)
+                                   )
 
         self.enter_button.bind(on_release=self.dropdown.open)
         self.add_widget(self.enter_button, index=0)
