@@ -14,7 +14,7 @@ if(!isset($_POST['name']))
   $itemid = $row['itemid'];
 
   //look in account number 1 for list of object ids
-  $sqlstatement1="INSERT INTO basket VALUES (1,".$itemid.");";
+  $sqlstatement1="INSERT INTO basket VALUES ('1',".$itemid.");";
   //return array of object ids
   $result = $mysqli->query($sqlstatement1);
 
