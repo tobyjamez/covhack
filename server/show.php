@@ -32,7 +32,7 @@ if(!empty($result))
     $itemid = $row['itemid'];       //providerid
 
     //Find name of provider
-    $sqlstatement3="SELECT name,provider,price FROM items WHERE itemid ='".$itemid."';";
+    $sqlstatement3="SELECT name,provider,price FROM items WHERE itemid =".$itemid.";";
     $iresult = $mysqli->query($sqlstatement3);
 
     if(!empty($iresult)){
