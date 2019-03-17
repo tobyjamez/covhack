@@ -41,16 +41,22 @@ class RootWidget(ScreenManager):
 
     def send_search(self, term, response_list) -> type(None):
 
+        new_screen = "search"
+
         response_dict = search(term)['data']
 
-        response_list.append(response_dict)
+        if response_dict is None:
+            return None
 
-        for item in response_list:
-            item_view = ProductView(item)
-            self.search_screen.add_widget(item_view)
 
-        self.current = "search"
-        self.dropdown.dismiss()
+        else:
+            response_list.append(response_dict)
+            for item in response_list:
+                item_view = ProductView(item)
+                self.search_screen.add_widget(item_view)
+
+            self.current = new_screen
+            self.dropdown.dismiss()
 
     def __init__(self, **kwargs):
         # make sure we aren't overriding any important functionality
