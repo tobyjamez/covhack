@@ -89,9 +89,11 @@ class RootWidget(ScreenManager):
         self.dropdown.add_widget(self.textinput)
 
         # Add buttons to dropdown menu
-        search_button = Button(text="Search",
-                               size_hint_y=None,
-                               height=44)
+        search_button = Button(color=(0, 0, 0, 1),
+                              background_color=(255, 255, 255, 255),
+                              text="Search",
+                              size_hint_y=None,
+                              height=44)
 
         self.search_response_list = []
 
@@ -101,7 +103,9 @@ class RootWidget(ScreenManager):
 
         self.dropdown.add_widget(search_button)
 
-        show_button = Button(text="Show",
+        show_button = Button(color=(0, 0, 0, 1), 
+                             background_color=(255, 255, 255, 255),
+                             text="Show",
                              size_hint_y=None,
                              height=44)
 
@@ -112,10 +116,14 @@ class RootWidget(ScreenManager):
         # --------------------------------------------------------------
 
         # Add enter button ---------------------------------------------
-        self.enter_button = Button(text="Start!",
+        self.enter_button = Button(color=(0, 0, 0, 1), 
+                                   background_color=(255, 255, 255, 255),
+                                   text="Start!",
                                    size_hint=(1, .2),
                                    pos_hint={'center_x': 0.5,
-                                             'center_y': 0.07})
+                                             'center_y': 0.07},
+                                   
+                                    )
 
         self.enter_button.bind(on_release=self.dropdown.open)
         self.screen1.add_widget(self.enter_button, index=0)
