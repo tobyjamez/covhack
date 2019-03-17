@@ -25,6 +25,7 @@ from kivy.uix.dropdown import DropDown
 from kivy.uix.image import Image
 from kivy.uix.textinput import TextInput
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.graphics import Color, Rectangle 
 
 from comm import search, add, show
 from productview import ProductView
@@ -61,9 +62,21 @@ class RootWidget(ScreenManager):
         self.list_screen = Screen(name="list")
 
         # Add widgets----------------------------------------------------------
+        with self.screen1.canvas.before: 
+              Color(0,0,0,1) 
+              self.screen1.rect = Rectangle(size=self.screen1.size,
+                           pos=self.screen1.pos)
 
+        def update_rect(instance, value):
+            instance.rect.pos = instance.pos
+            instance.rect.size = instance.size
+
+        # listen to size and position changes
+        self.screen1.bind(pos=update_rect, size=update_rect)
+       
         # Add image ----------------------------------------------------
-        self.screen1.add_widget(Image(source='Phrijj.png', size_hint=(1, 1),
+        self.screen1.add_widget(Image(
+                             source='Phrijj.png', size_hint=(1, 1),
                                       pos_hint={'center_x': 0.5,
                                                 'center_y': 0.6}),
                                 index=1)
