@@ -46,7 +46,7 @@ if(!empty($result))
 	    $price = $currentItem['price'];                 //contains price
 	    $name = $currentItem['name'];                   //name
 	    $itemresponse = array($name, $price,$provider);
-	    array_push($totalitemresponse,$itemresponse)
+	    array_push($totalitemresponse,$itemresponse);
   	}
 	  else
 	  {
