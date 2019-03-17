@@ -14,6 +14,7 @@ if(!empty($result))
 {
 	//for each objectid
 	//if it finds an instance of itself in the list, add 1 to  quantity
+	$totalitemresponse=array()
 	while($row = mysqli_fetch_assoc($result)){
 		/*
     $itemid = $row['itemid'];
@@ -45,13 +46,14 @@ if(!empty($result))
 	    $price = $currentItem['price'];                 //contains price
 	    $name = $currentItem['name'];                   //name
 	    $itemresponse = array($name, $price,$provider);
-	    response(200,"Product Found",$itemresponse);
+	    array_push($totalitemresponse,$itemresponse)
   	}
 	  else
 	  {
 	    response(200,"Product Not Found",NULL);
 	  }
 	}
+	response(200,"Product Found",$totalitemresponse);
 }
 else
 {
