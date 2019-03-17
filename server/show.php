@@ -8,7 +8,7 @@ header("Content-Type:application/json");
 include_once ('db.php');
 
 //look in account number 1 for list of object ids
-$sqlstatement1="SELECT name,price, providerid, itemid FROM items;";
+$sqlstatement1="SELECT itemid FROM basket;";
 //return array of object ids
 $result = $mysqli->query($sqlstatement1);
 
@@ -29,18 +29,18 @@ if(!empty($result))
         }
      }
 		*/
-    $providerid = $row['providerid'];       //providerid
+    $itemid = $row['itemid'];       //providerid
 
     //Find name of provider
-    $sqlstatement3="SELECT provider FROM providers WHERE providerid ='".$providerid."';";
-    $providernameresult = $mysqli->query($sqlstatement3);
+    $sqlstatement3="SELECT name,provider,price FROM items WHERE itemid ='".$itemid."';";
+    $iresult = $mysqli->query($sqlstatement3);
 
-    if(!empty($result)){
+    if(!empty($iresult)){
 
-	    $providername = mysqli_fetch_assoc($providernameresult);
-	    $provider = $providername['provider'];  //contains provider
-	    $price = $row['price'];                 //contains price
-	    $name = $row['name'];                   //name
+	    $currentItem = mysqli_fetch_assoc($iresult);
+	    $provider = $currentItem['provider'];  //contains provider
+	    $price = $currentItem['price'];                 //contains price
+	    $name = $currentItem['name'];                   //name
 	    $itemresponse = array($name, $price,$provider);
 	    response(200,"Product Found",$itemresponse);
   	}
