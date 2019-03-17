@@ -14,6 +14,7 @@ if(empty($result))
 	//for each objectid
 	//if it finds an instance of itself in the list, add 1 to  quantity
 	while($row = mysql_fetch_assoc($result)){
+		/*
     $itemid = $row['itemid'];
     //go through each object id in items, looks for them in the array
      $sqlstatement2="SELECT itemid FROM basket;";
@@ -24,6 +25,7 @@ if(empty($result))
             $index += 1;
         }
      }
+		*/
     $providerid = $row['providerid'];       //providerid
 
     //Find name of provider
