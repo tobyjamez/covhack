@@ -25,7 +25,6 @@ if(!empty($data->name)){
     $providernameresult = $mysqli->query($sqlstatement1);
     $providername = mysqli_fetch_assoc($providernameresult);
     $provider = $providername['provider'];
-    echo $provider;
 
     //create response json
     $response = array();
