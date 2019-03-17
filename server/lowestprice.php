@@ -25,15 +25,14 @@ if(!empty($_GET['name']))
   $response["name"] = $name;
   $response["price"] = $price;
   $response["provider"] = $provider;
-  $jsonDataEncoded = json_encode($response);
   
-  if(empty($price))
+  if(empty($response))
   {
     response(200,"Product Not Found",NULL);
   }
   else
   {
-    response(200,"Product Found",$price);
+    response(200,"Product Found",$response);
   }
   
 }
