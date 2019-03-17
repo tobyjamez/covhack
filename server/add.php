@@ -4,7 +4,7 @@ header("Content-Type:application/json");
 
 include_once ('db.php');
 
-if(!empty($_POST['name']))
+if(!isset($_POST['name']))
 {
   $name=$_POST['name'];
   $sqlstatement="SELECT name, price, itemid, providerid FROM items WHERE name LIKE '".$name."'ORDER BY price ;";
