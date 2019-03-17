@@ -1,5 +1,8 @@
 <?php
 // required headers
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
 header("Content-Type:application/json");
 
 include_once ('db.php');
