@@ -1,7 +1,7 @@
 <?php
 // required headers
 
-header("Content-Type:application/x-www-form-urlencoded");
+header("Content-Type:application/json");
 
 include_once ('db.php');
 
