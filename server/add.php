@@ -7,7 +7,6 @@ include_once ('db.php');
 if(isset($_POST['name']))
 {
   $name=$_POST['name'];
-  response(200,"Product",$name);
   $sqlstatement="SELECT itemid FROM items WHERE name LIKE '".$name."' ORDER BY price ;";
   $result = $mysqli->query($sqlstatement);
   $row = mysqli_fetch_assoc($result);
@@ -22,7 +21,7 @@ if(isset($_POST['name']))
   {
 
     //look in account number 1 for list of object ids
-    $sqlstatement1="INSERT INTO basket VALUES ('1',".$itemid.");";
+    $sqlstatement1="INSERT INTO basket VALUES (1,".$itemid.");";
     //return array of object ids
     $result = $mysqli->query($sqlstatement1);
 
