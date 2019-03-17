@@ -3,7 +3,6 @@
 header("Content-Type:application/json");
 
 include_once ('db.php');
-include('response_protocol.php')
 
 if(!empty($_GET['name']))
 {
@@ -40,6 +39,20 @@ if(!empty($_GET['name']))
 else
 {
   response(400,"Invalid Request",NULL);
+}
+
+
+
+function response($status,$status_message,$data)
+{
+  header("HTTP/1.1 ".$status);
+  
+  $response['status']=$status;
+  $response['status_message']=$status_message;
+  $response['data']=$data;
+  
+  $json_response = json_encode($response);
+  echo $json_response;
 }
 
 ?>
