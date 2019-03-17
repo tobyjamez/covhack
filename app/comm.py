@@ -5,7 +5,7 @@ Server interface functions for http verbs.
 import requests
 import json
 
-API_URL = ""
+API_URL = "https://phrijj.herokuapp.com/server/"
 
 
 def search(search_string: str) -> dict:
@@ -15,8 +15,8 @@ def search(search_string: str) -> dict:
     Send a GET request with the search string.
     """
     params = dict(action="search",
-                  word="search_string")
-    response = requests.get(url=API_URL, params=params)
+                  name=search_string)
+    response = requests.get(API_URL+"lowestprice/"+search_string)
     return response.json()
 
 

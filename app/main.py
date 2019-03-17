@@ -24,78 +24,128 @@ from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown
 from kivy.uix.image import Image
 from kivy.uix.textinput import TextInput
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.graphics import Color, Rectangle 
 
 from comm import search, add, show
+from productview import ProductView
 
 kivy.require('1.10.1')
 
 
-class CustomTextInput(TextInput):
-    def toggle_opacity(self) -> type(None):
-        self.opacity = 1 - self.opacity
+class RootWidget(ScreenManager):
+
+    def switch_screen(self):
+        self.current = "list"
+        self.dropdown.dismiss()
+
+    def send_search(self, term, response_list) -> type(None):
+
+        new_screen = "search"
+
+        response_dict = search(term)['data']
+
+        if response_dict is None:
+            return None
 
 
-class RootWidget(FloatLayout):
-    # Class variables
+        else:
+            response_list.append(response_dict)
+            for item in response_list:
+                item_view = ProductView(item)
+                self.search_screen.add_widget(item_view)
 
-    @staticmethod
-    def button_trip(textinput, dropdown, widget):
-        dropdown.open(widget)
-        textinput.toggle_opacity()
+            self.current = new_screen
+            self.dropdown.dismiss()
 
     def __init__(self, **kwargs):
         # make sure we aren't overriding any important functionality
-        super(RootWidget, self).__init__(**kwargs)
+        super().__init__(**kwargs)
+
+        self.screen1 = Screen(name="1")
+
+        self.search_screen = Screen(name="search")
+        self.list_screen = Screen(name="list")
 
         # Add widgets----------------------------------------------------------
+        with self.screen1.canvas.before: 
+              Color(0,0,0,1) 
+              self.screen1.rect = Rectangle(size=self.screen1.size,
+                           pos=self.screen1.pos)
 
+        def update_rect(instance, value):
+            instance.rect.pos = instance.pos
+            instance.rect.size = instance.size
+
+        # listen to size and position changes
+        self.screen1.bind(pos=update_rect, size=update_rect)
+       
         # Add image ----------------------------------------------------
-        self.add_widget(Image(source='Phrijj.png', size_hint=(1, 1),
-                        pos_hint={'center_x': 0.5, 'center_y': 0.6}),
-                        index=1)
+        self.screen1.add_widget(Image(
+                             source='Phrijj.png', size_hint=(1, 1),
+                                      pos_hint={'center_x': 0.5,
+                                                'center_y': 0.6}),
+                                index=1)
         # --------------------------------------------------------------
 
         # Add textinput ------------------------------------------------
-        textinput = CustomTextInput(hint_text="Search for a meal",
-                                    multiline=False,
-                                    size_hint_y=None,
-                                    height=44,
-                                    pos_hint={'center_x': 0.5,
-                                              'center_y': 0.95},
-                                    opacity=0)
-
-        self.add_widget(textinput)
+        self.textinput = TextInput(hint_text="Search for ingredients",
+                                   multiline=False,
+                                   size_hint_y=None,
+                                   height=44,
+                                   pos_hint={'center_x': 0.5,
+                                             'center_y': 0.95},
+                                   opacity=1)
 
         # Add dropdown menu --------------------------------------------
-        dropdown = DropDown()
+        self.dropdown = DropDown()
+        self.dropdown.add_widget(self.textinput)
 
         # Add buttons to dropdown menu
-        search_button = Button(text="Search",
-                               size_hint_y=None,
-                               height=44)
+        search_button = Button(color=(0, 0, 0, 1),
+                              background_color=(255, 255, 255, 255),
+                              text="Search",
+                              size_hint_y=None,
+                              height=44)
 
-        dropdown.add_widget(search_button)
+        self.search_response_list = []
 
-        show_button = Button(text="Show",
+        search_button.bind(on_press=lambda widget:
+                           self.send_search(self.textinput.text,
+                                            self.search_response_list))
+
+        self.dropdown.add_widget(search_button)
+
+        show_button = Button(color=(0, 0, 0, 1), 
+                             background_color=(255, 255, 255, 255),
+                             text="Show",
                              size_hint_y=None,
                              height=44)
 
-        dropdown.add_widget(show_button)
+        show_button.bind(on_press=lambda widget: self.switch_screen())
 
-        dropdown.bind(on_release=lambda x: textinput.toggle_opacity())
+        self.dropdown.add_widget(show_button)
+
         # --------------------------------------------------------------
 
         # Add enter button ---------------------------------------------
-        enter_button = Button(text="Enter",
-                              size_hint=(1, .2),
-                              pos_hint={'center_x': 0.5, 'center_y': 0.07})
+        self.enter_button = Button(color=(0, 0, 0, 1), 
+                                   background_color=(255, 255, 255, 255),
+                                   text="Start!",
+                                   size_hint=(1, .2),
+                                   pos_hint={'center_x': 0.5,
+                                             'center_y': 0.07},
+                                   
+                                    )
 
-        enter_button.bind(on_release=lambda widget: self.button_trip(textinput,
-                                                                     dropdown,
-                                                                     widget))
+        self.enter_button.bind(on_release=self.dropdown.open)
+        self.screen1.add_widget(self.enter_button, index=0)
 
-        self.add_widget(enter_button, index=0)
+        self.add_widget(self.screen1)
+        self.add_widget(self.list_screen)
+        self.add_widget(self.search_screen)
         # --------------------------------------------------------------
+        # ---------------------------------------------------------------------
 
 
 class PhrijjApp(App):
