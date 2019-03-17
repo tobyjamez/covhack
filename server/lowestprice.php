@@ -7,7 +7,7 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once ('db.php');
-$data = json_decode(file_get_contents("php://input"));
+$data = json_decode($data);
 if(!empty($data->name)){
 
   $sqlstatement="SELECT name, price, itemid, providerid FROM items WHERE name LIKE '".$data->name."'ORDER BY price ;";
