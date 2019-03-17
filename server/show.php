@@ -35,19 +35,18 @@ if(!empty($result))
     $sqlstatement3="SELECT provider FROM providers WHERE providerid ='".$providerid."';";
     $providernameresult = $mysqli->query($sqlstatement3);
 
-    if(empty($result)){
+    if(!empty($result)){
 
 	    $providername = mysqli_fetch_assoc($providernameresult);
 	    $provider = $providername['provider'];  //contains provider
 	    $price = $row['price'];                 //contains price
 	    $name = $row['name'];                   //name
 	    $itemresponse = array($name, $price,$provider);
-	    
-	    response(200,"Product Not Found",NULL);
+	    response(200,"Product Found",$itemresponse);
   	}
 	  else
 	  {
-	    response(200,"Product Found",$itemresponse);
+	    response(200,"Product Not Found",NULL);
 	  }
 	}
 }
