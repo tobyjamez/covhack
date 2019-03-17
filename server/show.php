@@ -14,7 +14,7 @@ if(!empty($result))
 {
 	//for each objectid
 	//if it finds an instance of itself in the list, add 1 to  quantity
-	$totalitemresponse=array()
+	$totalitemresponse=array();
 	while($row = mysqli_fetch_assoc($result)){
 		/*
     $itemid = $row['itemid'];
