@@ -7,11 +7,9 @@ include_once ('db.php');
 if(!empty($_GET['name']))
 {
 
-  response(200,"Product Found",$_GET['name']);
-
   $sqlstatement="SELECT name, price, itemid, providerid FROM items WHERE name LIKE '".$_GET['name']."'ORDER BY price ;";
   $result = $mysqli->query($sqlstatement);
-
+  $row = mysqli_fetch_assoc($result);
   $price = $row['price'];
   $itemid = $row['itemid'];
   $providerid = $row['providerid'];
