@@ -3,7 +3,6 @@
 header("Content-Type:application/json");
 
 include_once ('db.php');
-include('response_protocol.php')
 
 //look in account number 1 for list of object ids
 $sqlstatement1="SELECT name,price, providerid, itemid FROM items;";
@@ -28,8 +27,8 @@ if(empty($result))
     $providerid = $row['providerid'];       //providerid
 
     //Find name of provider
-    $sqlstatement1="SELECT provider FROM providers WHERE providerid =".$providerid.";";
-    $providernameresult = $mysqli->query($sqlstatement1);
+    $sqlstatement3="SELECT provider FROM providers WHERE providerid ='".$providerid."';";
+    $providernameresult = $mysqli->query($sqlstatement3);
 
     if(empty($result)){
 
