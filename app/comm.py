@@ -3,7 +3,6 @@ Server interface functions for http verbs.
 """
 
 import requests
-import json
 
 API_URL = "https://phrijj.herokuapp.com/server/"
 
@@ -26,7 +25,7 @@ def add(item_id: str) -> int:
 
     Send a POST request with an item id to add to shopping list.
     """
-    headers = {"content-type":"application/json"} 
+    headers = {"content-type": "application/json"}
     data = dict(name=item_id)
     response = requests.post(url=API_URL+"add/", data=data)
     return response.json()['status']
