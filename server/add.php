@@ -7,26 +7,32 @@ include_once ('db.php');
 if(!isset($_POST['name']))
 {
   $name=$_POST['name'];
-  $sqlstatement="SELECT name, price, itemid, providerid FROM items WHERE name LIKE '".$name."'ORDER BY price ;";
+  $sqlstatement="SELECT itemid FROM items WHERE name LIKE '".$name."'ORDER BY price ;";
   $result = $mysqli->query($sqlstatement);
   $row = mysqli_fetch_assoc($result);
 
   $itemid = $row['itemid'];
-
-  //look in account number 1 for list of object ids
-  $sqlstatement1="INSERT INTO basket VALUES ('1',".$itemid.");";
-  //return array of object ids
-  $result = $mysqli->query($sqlstatement1);
-
-  if(empty($result))
+  if(empty($itemid))
   {
     response(200,"Product Not Found",NULL);
   }
   else
   {
-    response(200,"Product Found","Item inserted");
+
+    //look in account number 1 for list of object ids
+    $sqlstatement1="INSERT INTO basket VALUES ('1',".$itemid.");";
+    //return array of object ids
+    $result = $mysqli->query($sqlstatement1);
+
+    if(!$result))
+    {
+      response(200,"Product Not Found",NULL);
+    }
+    else
+    {
+      response(200,"Product Found","Item inserted");
+    }
   }
-  
 }
 else
 {
