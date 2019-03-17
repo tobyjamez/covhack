@@ -1,16 +1,13 @@
 <?php
 // required headers
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Max-Age: 3600");
+header("Content-Type:application/json");
 
 include_once ('db.php');
 
 $data = json_decode($data);
-if(!empty($data->name)){
+if(!empty($_GET['name'])){
 
-  $sqlstatement="SELECT name, price, itemid, providerid FROM items WHERE name LIKE '".$data->name."'ORDER BY price ;";
+  $sqlstatement="SELECT name, price, itemid, providerid FROM items WHERE name LIKE '".$_GET['name']."'ORDER BY price ;";
   $result = $mysqli->query($sqlstatement);
 
   //Get relevant data about item
