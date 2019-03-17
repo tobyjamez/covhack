@@ -3,7 +3,7 @@
 header("Content-Type:application/json");
 
 include_once ('db.php');
-include_once('response_protocol.php')
+include('response_protocol.php')
 
 //look in account number 1 for list of object ids
 $sqlstatement1="SELECT name,price, providerid, itemid FROM items;";

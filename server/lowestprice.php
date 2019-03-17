@@ -3,7 +3,7 @@
 header("Content-Type:application/json");
 
 include_once ('db.php');
-include_once('response_protocol.php')
+include('response_protocol.php')
 
 if(!empty($_GET['name']))
 {
