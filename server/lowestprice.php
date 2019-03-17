@@ -6,8 +6,8 @@ include_once ('db.php');
 
 if(!empty($_GET['name']))
 {
-
-  $sqlstatement="SELECT name, price, itemid, providerid FROM items WHERE name LIKE '".$_GET['name']."'ORDER BY price ;";
+  $name=$_GET['name'];
+  $sqlstatement="SELECT name, price, itemid, providerid FROM items WHERE name LIKE '".$name."'ORDER BY price ;";
   $result = $mysqli->query($sqlstatement);
   $row = mysqli_fetch_assoc($result);
   $price = $row['price'];
