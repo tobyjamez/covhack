@@ -24,48 +24,63 @@ from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown
 from kivy.uix.image import Image
 from kivy.uix.textinput import TextInput
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 from comm import search, add, show
+from productview import ProductView
 
 kivy.require('1.10.1')
 
 
-class RootWidget(FloatLayout):
-    # Class variables
+class RootWidget(ScreenManager):
 
-    def send_search(term, response_list, widget) -> type(None):
+    def switch_screen(self):
+        self.current = "list"
+        self.dropdown.dismiss()
+
+    def send_search(self, term, response_list) -> type(None):
 
         response_dict = search(term)
 
         response_list.append(response_dict)
 
+        for item in response_list:
+            item_view = ProductView(item)
+            self.search_screen.add_widget(item_view)
+
+        self.current = "search"
         self.dropdown.dismiss()
-    
+
     def __init__(self, **kwargs):
         # make sure we aren't overriding any important functionality
-        super(RootWidget, self).__init__(**kwargs)
+        super().__init__(**kwargs)
+
+        self.screen1 = Screen(name="1")
+
+        search_screen = Screen(name="search")
+        list_screen = Screen(name="list")
 
         # Add widgets----------------------------------------------------------
 
         # Add image ----------------------------------------------------
-        self.add_widget(Image(source='Phrijj.png', size_hint=(1, 1),
-                        pos_hint={'center_x': 0.5, 'center_y': 0.6}),
-                        index=1)
+        self.screen1.add_widget(Image(source='Phrijj.png', size_hint=(1, 1),
+                                      pos_hint={'center_x': 0.5,
+                                                'center_y': 0.6}),
+                                index=1)
         # --------------------------------------------------------------
 
         # Add textinput ------------------------------------------------
         self.textinput = TextInput(hint_text="Search for ingredients",
-                                         multiline=False,
-                                         size_hint_y=None,
-                                         height=44,
-                                         pos_hint={'center_x': 0.5,
-                                                   'center_y': 0.95},
-                                         opacity=1)
-
+                                   multiline=False,
+                                   size_hint_y=None,
+                                   height=44,
+                                   pos_hint={'center_x': 0.5,
+                                             'center_y': 0.95},
+                                   opacity=1)
 
         # Add dropdown menu --------------------------------------------
         self.dropdown = DropDown()
-        self.dropdown.add_widget(self.textinput)
+        self.dropdown.add_widget(self.textinput, 0)
 
         # Add buttons to dropdown menu
         search_button = Button(text="Search",
@@ -74,16 +89,17 @@ class RootWidget(FloatLayout):
 
         self.search_response_list = []
 
-        search_button.bind(on_click=lambda widget:
-                           self.send_search(self.textinput.text,
-                                            self.search_response_list,
-                                            widget))
+        search_button.bind(on_press=lambda widget:
+                           self.send_search(self.dropdown.children[0].text,
+                                            self.search_response_list))
 
         self.dropdown.add_widget(search_button)
 
         show_button = Button(text="Show",
                              size_hint_y=None,
                              height=44)
+
+        show_button.bind(on_press=lambda widget: self.switch_screen())
 
         self.dropdown.add_widget(show_button)
 
@@ -96,7 +112,11 @@ class RootWidget(FloatLayout):
                                              'center_y': 0.07})
 
         self.enter_button.bind(on_release=self.dropdown.open)
-        self.add_widget(self.enter_button, index=0)
+        self.screen1.add_widget(self.enter_button, index=0)
+
+        self.add_widget(self.screen1)
+        self.add_widget(list_screen)
+        self.add_widget(search_screen)
         # --------------------------------------------------------------
         # ---------------------------------------------------------------------
 
