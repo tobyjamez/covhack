@@ -6,6 +6,9 @@ include_once ('db.php');
 
 if(!empty($_GET['name']))
 {
+
+  response(200,"Product Found",$_GET['name']);
+
   $sqlstatement="SELECT name, price, itemid, providerid FROM items WHERE name LIKE '".$_GET['name']."'ORDER BY price ;";
   $result = $mysqli->query($sqlstatement);
 
@@ -25,9 +28,6 @@ if(!empty($_GET['name']))
   $response["price"] = $price;
   $response["provider"] = $provider;
   $jsonDataEncoded = json_encode($response);
-
-
-  $price = $price;
   
   if(empty($price))
   {
