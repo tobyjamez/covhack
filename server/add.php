@@ -26,11 +26,11 @@ if(!isset($_POST['name']))
 
     if(!$result)
     {
-      response(200,"Product Not Found",NULL);
+      response(200,"Could not add to db",NULL);
     }
     else
     {
-      response(200,"Product Found","Item inserted");
+      response(200,"Product added to db","Item inserted");
     }
   }
 }
