@@ -40,7 +40,7 @@ class RootWidget(ScreenManager):
 
     def send_search(self, term, response_list) -> type(None):
 
-        response_dict = search(term)
+        response_dict = search(term)['data']
 
         response_list.append(response_dict)
 
@@ -57,8 +57,8 @@ class RootWidget(ScreenManager):
 
         self.screen1 = Screen(name="1")
 
-        search_screen = Screen(name="search")
-        list_screen = Screen(name="list")
+        self.search_screen = Screen(name="search")
+        self.list_screen = Screen(name="list")
 
         # Add widgets----------------------------------------------------------
 
@@ -80,7 +80,7 @@ class RootWidget(ScreenManager):
 
         # Add dropdown menu --------------------------------------------
         self.dropdown = DropDown()
-        self.dropdown.add_widget(self.textinput, 0)
+        self.dropdown.add_widget(self.textinput)
 
         # Add buttons to dropdown menu
         search_button = Button(text="Search",
@@ -90,7 +90,7 @@ class RootWidget(ScreenManager):
         self.search_response_list = []
 
         search_button.bind(on_press=lambda widget:
-                           self.send_search(self.dropdown.children[0].text,
+                           self.send_search(self.textinput.text,
                                             self.search_response_list))
 
         self.dropdown.add_widget(search_button)
@@ -115,8 +115,8 @@ class RootWidget(ScreenManager):
         self.screen1.add_widget(self.enter_button, index=0)
 
         self.add_widget(self.screen1)
-        self.add_widget(list_screen)
-        self.add_widget(search_screen)
+        self.add_widget(self.list_screen)
+        self.add_widget(self.search_screen)
         # --------------------------------------------------------------
         # ---------------------------------------------------------------------
 
