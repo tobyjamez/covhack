@@ -24,7 +24,7 @@ if(!isset($_POST['name']))
     //return array of object ids
     $result = $mysqli->query($sqlstatement1);
 
-    if(!$result))
+    if(!$result)
     {
       response(200,"Product Not Found",NULL);
     }
