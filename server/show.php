@@ -12,7 +12,7 @@ $sqlstatement1="SELECT name,price, providerid, itemid FROM items;";
 //return array of object ids
 $result = $mysqli->query($sqlstatement1);
 
-if(empty($result))
+if(!empty($result))
 {
 	//for each objectid
 	//if it finds an instance of itself in the list, add 1 to  quantity
